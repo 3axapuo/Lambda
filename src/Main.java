@@ -7,7 +7,7 @@ public class Main {
     public static void main(String[] args) {
 
         List<Person> clients = generateClients();
-        Collections.sort(clients, new SurnameCalculate().reversed());
+        Collections.sort(clients, new SurnameCalculate(7).reversed());
         System.out.println(clients);
     }
 
