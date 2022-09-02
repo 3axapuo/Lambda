@@ -1,12 +1,19 @@
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
+import java.util.function.Predicate;
 
 public class Main {
     public static void main(String[] args) {
         final int maxSurnameWords = 7; // максимальное число слов в фамилии
         List<Person> clients = generateClients();
-
+        //ЗАДАЧА №2, Нашей целью будет удалить в списке людей в main тех людей, которые младше 18 лет
+        //(если сейчас в демонстрации нет таких людей - добавьте, чтобы их было как минимум 2).
+        //Но мы не будем для этого сами проходиться по списку, мы воспользуемся его готовым методом
+        //removeIf. Вызовите его у списка и передайте туда предикат (Predicate<Person>), метод
+        // которого отвечал бы true тогда и только тогда, когда человеку из его параметра меньше
+        // 18 лет. Таким образом список сам пройдётся по своим элементам и оттестирует каждый вашим
+        // предикатом, на ком покажет true - тот и будет удалён.
+        clients.removeIf(isLessThan18Age());
         //ЗАДАЧА №1, Удалите класс компаратора и в методе main замените объект этого удалённого класса
         //на лямбду с той же логикой. Т.е. по сути мы дадим имплементацию компаратору на лету с помощью лямбды.
         //Если вы делали вторую задачу, то параметра не будет (их у лямбд не бывает) - вместо этого просто
@@ -26,6 +33,7 @@ public class Main {
         });
         System.out.println(clients);
     }
+
     public static List<Person> generateClients() {
         List<Person> clients = new ArrayList<>();
         clients.add(new Person("Билл", "Гейтс", 5));
@@ -37,5 +45,9 @@ public class Main {
         clients.add(new Person("!Геральд", "Муррэй Моррис", 40));
         clients.add(new Person("Пикассо", "Пабло Диего Хозе Франциско де Паула Хуан", 35));
         return clients;
+    }
+
+    public static Predicate<Person> isLessThan18Age() {
+        return o1 -> o1.getAge() < 18;
     }
 }
